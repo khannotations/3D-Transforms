@@ -1,0 +1,213 @@
+$perspective: 800px;
+
+body {
+  padding: 0; margin: 0;
+}
+.header {
+  border-bottom: 1pt solid #ddd;
+}
+.container {
+  font: 16px/1.3 HelveticaLight, helvetica, sans-serif;
+  width: 800px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+%fill {
+  position: absolute;
+  width: 100%; height: 100%;
+}
+
+@mixin big-text($size) {
+  color: white;
+  font-size: $size/6;
+  line-height: $size;
+  text-align: center;
+}
+
+// The styles of the cube that don't depend on its size
+%cube-static {
+  display: inline-block;
+  position: relative;
+  perspective: $perspective;
+  perspective-origin: -100% 200%;
+  transform-style: preserve-3d;
+  > .cube {
+    @extend %fill;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+    > .side {
+      @extend %fill;
+      transition: all 0.5s;
+    }
+    &.back-hidden {
+      .side {
+        backface-visibility: hidden;
+      }
+    }
+  }
+}
+
+// The styles of the cube that do depend on its size
+@mixin cube-dynamic($size, $stretch: 1.5) {
+    width: $size;
+    height: $size;
+    margin-left: $size/2;
+    margin-bottom: $size/2;
+    > .cube {
+      @include big-text($size);
+      transform: translateZ(-$size/2);
+      > .side {
+        width: $size;
+        height: $size;
+        &.side-1 { // Front
+          transform: rotateY(0deg) translateZ($size/2);
+          background-color: rgba(red, 0.5);
+        }
+        &.side-2 { // Back
+          transform: rotateY(180deg) translateZ($size/2);
+          background-color: rgba(blue, 0.5);
+        }
+        &.side-3 { // Top
+          transform: rotateX(90deg) translateZ($size/2);
+          background-color: rgba(yellow, 0.5);
+        }
+        &.side-4 { // Bottom
+          transform: rotateX(-90deg) translateZ($size/2);
+          background-color: rgba(orange, 0.5);
+        }
+        &.side-5 { // Right
+          transform: rotateY(90deg) translateZ($size/2);
+          background-color: rgba(green, 0.5);
+        }
+        &.side-6 { // Left
+          transform: rotateY(-90deg) translateZ($size/2);
+          background-color: rgba(purple, 0.5);
+        }
+      }
+      &.spinning {
+        &.front { transform: translateZ(-$size/2) rotateY(0deg); }
+        &.back { transform: translateZ(-$size/2) rotateY(-180deg); }
+        &.top { transform: translateZ(-$size/2) rotateX(-90deg); }
+        &.bottom { transform: translateZ(-$size/2) rotateX(90deg); }
+        &.right { transform: translateZ(-$size/2) rotateY(-90deg); }
+        &.left { transform: translateZ(-$size/2) rotateY(90deg); }
+        &:hover {
+          @extend .cube.spinning.left
+        }
+      }
+      &.pop {
+        transform: translateZ(-$size/1.5);
+        &:hover {
+          transform: translateZ(-$size/2.5);
+        }
+      }
+      &.stretch {
+        $stretch-size: $size * $stretch;
+        &:hover {
+          .side-1 { // Front
+            transform: rotateY(0deg) translateZ($stretch-size/2);
+          }
+          .side-2 { // Back
+            transform: rotateY(180deg) translateZ($stretch-size/2);
+          }
+          .side-3 { // Top
+            height: $stretch-size;
+            transform: translateY(-($stretch-size - $size) / 2) rotateX(90deg) translateZ($size/2);
+          }
+          .side-4 { // Bottom
+            height: $stretch-size;
+            transform: translateY(-($stretch-size - $size) / 2) rotateX(-90deg) translateZ($size/2);
+          }
+          .side-5 { // Right
+            width: $stretch-size;
+            transform: translateX(-($stretch-size - $size) / 2) rotateY(90deg) translateZ($size/2);
+          }
+          .side-6 { // Left
+            width: $stretch-size;
+            transform: translateX(-($stretch-size - $size) / 2) rotateY(-90deg) translateZ($size/2);
+          }
+        }
+      }
+      &.abstract {
+        $abstract-width: $size * $stretch;
+        .side {
+          transition: all 0.5s;
+        }
+        &:hover {
+          .side-1 { // Front
+            transform: rotateY(0deg) translateZ($abstract-width/2);
+          }
+          .side-2 { // Back
+            transform: rotateY(180deg) translateZ($abstract-width/2);
+          }
+          .side-3 { // Top
+            height: $abstract-width;
+            transform: rotateX(90deg) translateZ($size/2);
+          }
+          .side-4 { // Bottom
+            height: $abstract-width;
+            transform: rotateX(-90deg) translateZ($size/2);
+          }
+          .side-5 { // Right
+            width: $abstract-width;
+            transform: rotateY(90deg) translateZ($size/2);
+          }
+          .side-6 { // Left
+            width: $abstract-width;
+            transform: rotateY(-90deg) translateZ($size/2);
+          }
+        }
+      }
+    }
+  }
+
+.cube-container {
+  @extend %cube-static;
+  @include cube-dynamic(200px);
+  &.small {
+    @include cube-dynamic(100px, 2);
+  }
+  &.big {
+    @include cube-dynamic(400px);
+  }
+}
+
+$card-size: 250px;
+$time: 1s;
+
+#card {
+  position: relative;
+  width: $card-size;
+  height: $card-size;
+  border: 1pt solid #aaa;
+  perspective: $perspective;
+  @include big-text($card-size);
+  .front {
+    @extend %fill;
+    transition: transform $time;
+    background-color: #4bbbfb;
+    backface-visibility: hidden;
+  }
+  .back {
+    @extend %fill;
+    transition: transform $time;
+    transform: rotateY(180deg);
+    background-color: #fbb444;
+    backface-visibility: hidden;
+  }
+  &:hover {
+    .front {
+      transform: rotateY(180deg);
+    }
+    .back {
+      transform: rotateY(0);
+    }
+  }
+}
+
+.funky {
+  color: #ff74cd;
+  font-style: italic;
+  font-family: serif;
+}

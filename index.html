@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>3D transforms</title>
+  <link rel="icon" href="./favicon.png">
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
+  <script src="./script.js"></script>
+</head>
+<body ng-app>
+  <div class="header">
+    <div class="container">
+      <p>
+        This is a fun page that explores creating 3D shapes (prisms and cards) with using CSS 3 only. The only Javascript used is a smidge of AngularJS for the first dropdown. Source available on Github (uses SCSS).
+      </p> 
+      <p>
+        Inspired by the work at 
+        <a href="http://desandro.github.io/3dtransforms/" target="_blank">http://desandro.github.io/3dtransforms/</a>. All work MIT licensed. 
+      </p>
+    </div>
+  </div>
+  <div class="container" ng-init="sides=['front', 'back', 'left', 'right', 'bottom', 'top']">
+    <p ng-init="spinSide = 'front';">
+      A spinning cube. Show the 
+      <select ng-model="spinSide" ng-options="side for side in sides"></select>
+    </p>
+    <div class="cube-container">
+      <div class="cube spinning" ng-class="spinSide">
+        <div class="side side-1">Front</div>
+        <div class="side side-2">Back</div>
+        <div class="side side-3">Top</div>
+        <div class="side side-4">Bottom</div>
+        <div class="side side-5">Right</div>
+        <div class="side side-6">Left</div>
+      </div>
+    </div>
+    <hr>
+    <p>
+      With the back faces hidden and hover to <b>pop!</b>
+    </p>
+    <div class="cube-container">
+      <div class="cube back-hidden pop">
+        <div class="side side-1">Front</div>
+        <div class="side side-2">Back</div>
+        <div class="side side-3">Top</div>
+        <div class="side side-4">Bottom</div>
+        <div class="side side-5">Right</div>
+        <div class="side side-6">Left</div>
+      </div>
+    </div>
+    <hr>
+    <p>
+      Now a <em>stretch</em>...
+    </p>
+    <div class="cube-container stretch">
+      <div class="cube stretch">
+        <div class="side side-1">Front</div>
+        <div class="side side-2">Back</div>
+        <div class="side side-3">Top</div>
+        <div class="side side-4">Bottom</div>
+        <div class="side side-5">Right</div>
+        <div class="side side-6">Left</div>
+      </div>
+    </div>
+    <hr>
+    <p>
+      Many mini!
+    </p>
+    <div class="cube-container small">
+      <div class="cube pop">
+        <div class="side side-1">POP!</div>
+        <div class="side side-2"></div>
+        <div class="side side-3"></div>
+        <div class="side side-4"></div>
+        <div class="side side-5"></div>
+        <div class="side side-6"></div>
+      </div>
+    </div>
+    <div class="cube-container small">
+      <div class="cube stretch">
+        <div class="side side-1">
+          <img src="http://lorempixel.com/200/200/city" width="100%" alt="">
+        </div>
+        <div class="side side-2">trary</div>
+        <div class="side side-3">Content</div>
+        <div class="side side-4">Can</div>
+        <div class="side side-5">Go</div>
+        <div class="side side-6"></div>
+      </div>
+    </div>
+    <div class="cube-container small">
+      <div class="cube back-hidden stretch spinning">
+        <div class="side side-1">Combine!</div>
+        <div class="side side-2"></div>
+        <div class="side side-3"></div>
+        <div class="side side-4"></div>
+        <div class="side side-5"></div>
+        <div class="side side-6"></div>
+      </div>
+    </div>
+    <div class="cube-container small">
+      <div class="cube back-hidden">
+        <div class="side side-1">Or not</div>
+        <div class="side side-2"></div>
+        <div class="side side-3"></div>
+        <div class="side side-4">2</div>
+        <div class="side side-5"></div>
+        <div class="side side-6">3</div>
+      </div>
+    </div>
+    <hr>
+    <p>
+      BIG!
+    </p>
+    <div class="cube-container big">
+      <div class="cube stretch">
+        <div class="side side-1">
+          <img src="http://lorempixel.com/201/201/nature" width="100%" alt="">
+        </div>
+        <div class="side side-2">
+        </div>
+        <div class="side side-3">
+        </div>
+        <div class="side side-4">
+          <img src="http://lorempixel.com/404/404/nightlife" width="100%" height="100%" alt="">
+        </div>
+        <div class="side side-5">
+          <img src="http://lorempixel.com/198/198/cats" width="100%" height="100%" alt="">
+        </div>
+        <div class="side side-6">
+        </div>
+      </div>
+    </div>
+    <p>
+      Now something <span class="funky">funky</span> happens...
+    </p>
+    <div class="cube-container">
+      <div class="cube abstract">
+        <div class="side side-1">Front</div>
+        <div class="side side-2">Back</div>
+        <div class="side side-3">Top</div>
+        <div class="side side-4">Bottom</div>
+        <div class="side side-5">Right</div>
+        <div class="side side-6">Left</div>
+      </div>
+    </div>
+    <hr>
+    <p>Now... a random spinning card</p>
+    <div id="card">
+      <div class="front">THE FRONT</div>
+      <div class="back">THE BACK</div>
+    </div>
+  </div>
+</body>
+</html>
